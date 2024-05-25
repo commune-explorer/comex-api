@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  comex-api:
+    container_name: comex-api
+    restart: on-failure
+    build:
+      context: .
+    volumes:
+      - .:/myapp
+    ports:
+      - "9489:4012"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
