@@ -1,10 +1,10 @@
 import { FastifyInstance } from 'fastify'
-import { listGallery } from '../controllers/home/listGallery'
+import { getInfo } from '../controllers/getInfo'
 
 export async function home(fastify: FastifyInstance) {
   fastify.route({
     method: 'GET',
-    url: '/gallery',
-    handler: listGallery,
+    url: '/info',
+    handler: getInfo,
   })
 }
