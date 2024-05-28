@@ -7,6 +7,7 @@ export async function getSubnets(request: FastifyRequest, reply: FastifyReply) {
       subnets: [
         {
           id: 1,
+          name: 'Prompting',
           activeKeys: 256,
           totalKeys: 256,
           activeValidators: 64,
