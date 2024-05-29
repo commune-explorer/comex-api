@@ -15,3 +15,15 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
+
+  communex-api:
+    container_name: communex-api
+    restart: on-failure
+    image: mos4ic/communex-api:latest
+    ports:
+      - "9488:7860"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
