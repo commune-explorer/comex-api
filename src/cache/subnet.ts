@@ -37,6 +37,7 @@ export class SubnetCache extends Cache<SubnetInfo[]> {
   }
 
   public async update() {
+    console.log('start update subnets')
     const subnets = (await fetchSubnets()).filter((i) => i.emission > 0).sort((a, b) => a.netuid - b.netuid)
     const { params, subnets: metaSubnets, burns } = await fetchSubnetData()
 
@@ -52,6 +53,7 @@ export class SubnetCache extends Cache<SubnetInfo[]> {
       }
 
       // modules
+      console.log('start fetch subnet modules:', netuid)
       const subnetModules = await fetchSubnetModules(netuid)
       modules[netuid] = subnetModules.map((i) => {
         return {
