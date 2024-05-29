@@ -1,16 +1,15 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { STANDARD } from '../constants/code'
+import { CACHE } from '../cache'
 
 export async function getInfo(request: FastifyRequest, reply: FastifyReply) {
+  const token = await CACHE.token.get()
+  const staking = { stakingApr: 40 }
+
   reply.status(STANDARD.SUCCESS).send({
     data: {
-      price: 0.82,
-      priceChangePercentageIn24h: -7.14,
-      volumeIn24h: 50000000,
-      marketCap: 1000000000,
-      circulatingSupply: 1000000000,
-      totalSupply: 1000000000,
-      stakingApr: 40,
+      ...token,
+      ...staking,
     },
   })
 }
