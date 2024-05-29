@@ -19,7 +19,7 @@ services:
   communex-api:
     container_name: communex-api
     restart: on-failure
-    image: mos4ic/communex-api:latest
+    image: mos4ic/communex-api:alpha
     ports:
       - "9488:7860"
     logging:
