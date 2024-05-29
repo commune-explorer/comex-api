@@ -1,7 +1,7 @@
 import { Cache } from './base'
-import { fetchSubnetParams } from '../graphql/fetchSubnetParams'
+import { fetchSubnetParams } from '../api/fetchSubnetParams'
 import { SubnetInfo, SubnetModule, SubnetParams } from '../models/subnet'
-import { fetchModules } from '../graphql/fetchModules'
+import { fetchModules } from '../api/fetchModules'
 
 export class SubnetCache extends Cache<SubnetInfo[]> {
   private subnets?: SubnetInfo[] = undefined
