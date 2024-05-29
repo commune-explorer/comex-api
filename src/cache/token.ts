@@ -1,15 +1,7 @@
 import { Cache } from './base'
 import axios from 'axios'
 import { CMC_KEY } from '../constants/keys'
-
-interface TokenData {
-  price: number
-  priceChangePercentageIn24h: number
-  volumeIn24h: number
-  marketCap: number
-  circulatingSupply: number
-  totalSupply: number
-}
+import { TokenData } from '../models/tokenData'
 
 export class TokenCache extends Cache<TokenData> {
   private cache?: TokenData = undefined
@@ -18,17 +10,7 @@ export class TokenCache extends Cache<TokenData> {
     if (!this.cache) {
       await this.update()
     }
-    return (
-      this.cache ?? {
-        price: 0,
-        priceChangePercentageIn24h: 0,
-        volumeIn24h: 0,
-        marketCap: 0,
-        circulatingSupply: 0,
-        totalSupply: 0,
-        stakingApr: 0,
-      }
-    )
+    return this.cache!
   }
 
   public async update() {

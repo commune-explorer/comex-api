@@ -6,16 +6,13 @@ interface ParamsType {
   id: string
 }
 
-export async function getSubnet(request: FastifyRequest<{ Params: ParamsType }>, reply: FastifyReply) {
+export async function getSubnetModules(request: FastifyRequest<{ Params: ParamsType }>, reply: FastifyReply) {
   const { id } = request.params
-
-  const info = await CACHE.subnet.getSubnet(id)
-  const params = await CACHE.subnet.getParams(id)
+  const modules = await CACHE.subnet.getModules(id)
 
   reply.status(STANDARD.SUCCESS).send({
     data: {
-      ...info,
-      params,
+      modules,
     },
   })
 }

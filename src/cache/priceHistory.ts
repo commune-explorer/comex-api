@@ -1,11 +1,6 @@
 import { Cache } from './base'
 import axios from 'axios'
-
-interface PriceRecord {
-  timestamp: number
-  price: number
-  volume: number
-}
+import { PriceRecord } from '../models/priceRecord'
 
 export class PriceHistoryCache extends Cache<PriceRecord[]> {
   private cache?: PriceRecord[] = undefined

@@ -29,6 +29,8 @@
     "cron": "^3.1.7",
     "dayjs": "^1.11.10",
     "fastify": "^4.26.2",
-    "fluent-json-schema": "^4.2.1"
+    "fluent-json-schema": "^4.2.1",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0"
   }
 }
