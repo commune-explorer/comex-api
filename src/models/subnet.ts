@@ -24,8 +24,9 @@ export interface SubnetModule {
   delegationFee: number
   stake: number
   address: string
-  active: boolean
   inImmunity: boolean
+  active: boolean
+  isValidator: boolean
 }
 
 export interface SubnetParams {

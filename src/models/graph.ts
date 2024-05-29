@@ -1,14 +1,11 @@
-export interface GraphSubnetModule {
-  id: string
-  uid: number
-  timestamp: number
-  registeredAt: number
-  nodeId: number
-  netUid: number
-  key: string
-  address: string
+export interface GraphSubnet {
   extrinsicId: number
+  id: string
   name: string
+  netUid: number
+  nodeId: number
+  registeredAt: number
+  timestamp: number
 }
 
 export interface GraphSubnetParams {
@@ -32,4 +29,25 @@ export interface GraphSubnetParams {
   nodeId: number
   trustRatio: number
   voteMode: string
+}
+
+export interface GraphSubnetBurn {
+  nodeId: number
+  netUid: number
+  lastUpate: number
+  id: string
+  burn: number
+}
+
+export interface GraphSubnetModule {
+  id: string
+  uid: number
+  timestamp: number
+  registeredAt: number
+  nodeId: number
+  netUid: number
+  key: string
+  address: string
+  extrinsicId: number
+  name: string
 }

@@ -7,7 +7,8 @@ interface ParamsType {
 }
 
 export async function getSubnet(request: FastifyRequest<{ Params: ParamsType }>, reply: FastifyReply) {
-  const { id } = request.params
+  const { id: idStr } = request.params
+  const id = parseInt(idStr)
 
   const info = await CACHE.subnet.getSubnet(id)
   const params = await CACHE.subnet.getParams(id)

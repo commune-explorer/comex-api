@@ -1,12 +1,12 @@
 import { Cache } from './base'
-import { fetchSubnetParams } from '../api/fetchSubnetParams'
 import { SubnetInfo, SubnetModule, SubnetParams } from '../models/subnet'
-import { fetchModules } from '../api/fetchModules'
+import { fetchSubnetModules, fetchSubnets } from '../api/comx'
+import { fetchSubnetData } from '../api/fetchSubnetData'
 
 export class SubnetCache extends Cache<SubnetInfo[]> {
   private subnets?: SubnetInfo[] = undefined
-  private modules: { [uid: string]: SubnetModule[] } = {}
-  private params: { [uid: string]: SubnetParams } = {}
+  private params: { [uid: number]: SubnetParams } = {}
+  private modules: { [uid: number]: SubnetModule[] } = {}
 
   public async get() {
     if (!this.subnets) {
@@ -15,21 +15,21 @@ export class SubnetCache extends Cache<SubnetInfo[]> {
     return this.subnets ?? []
   }
 
-  public async getSubnet(id: string) {
+  public async getSubnet(id: number) {
     if (!this.subnets) {
       await this.update()
     }
-    return this.subnets?.find((i) => i.id.toString() === id)
+    return this.subnets?.find((i) => i.id === id)
   }
 
-  public async getModules(id: string) {
+  public async getModules(id: number) {
     if (!this.subnets) {
       await this.update()
     }
     return this.modules[id] ?? []
   }
 
-  public async getParams(id: string) {
+  public async getParams(id: number) {
     if (!this.subnets) {
       await this.update()
     }
@@ -37,52 +37,59 @@ export class SubnetCache extends Cache<SubnetInfo[]> {
   }
 
   public async update() {
-    const params = await fetchSubnetParams()
-    const moduleList = await fetchModules()
+    const subnets = (await fetchSubnets()).filter((i) => i.emission > 0).sort((a, b) => a.netuid - b.netuid)
+    const { params, subnets: metaSubnets, burns } = await fetchSubnetData()
 
-    let modules: { [uid: string]: SubnetModule[] } = {}
-    for (const module of moduleList) {
-      const netuid = module.netUid.toString()
-      if (!modules[netuid]) {
-        modules[netuid] = []
+    let paramsMap: { [uid: number]: SubnetParams } = {}
+    let modules: { [uid: number]: SubnetModule[] } = {}
+
+    for (const subnet of subnets) {
+      const netuid = subnet.netuid
+      // params
+      const subnetParams = params.find((i) => i.netUid === netuid)
+      if (subnetParams) {
+        paramsMap[netuid] = subnetParams
       }
-      modules[netuid].push({
-        uid: module.uid,
-        key: module.key,
-        emission: 0,
-        incentive: 0,
-        dividends: 0,
-        delegationFee: 0,
-        stake: 0,
-        address: '',
-        active: false,
-        inImmunity: false,
+
+      // modules
+      const subnetModules = await fetchSubnetModules(netuid)
+      modules[netuid] = subnetModules.map((i) => {
+        return {
+          uid: i.uid,
+          key: i.key,
+          emission: i.emission,
+          incentive: i.incentive,
+          dividends: i.dividends,
+          delegationFee: i.delegation_fee,
+          stake: i.stake,
+          address: i.address,
+          inImmunity: i.in_immunity,
+          active: i.type !== 'inactive',
+          isValidator: i.type === 'validator',
+        }
       })
     }
+    this.params = paramsMap
     this.modules = modules
 
-    let paramsMap: { [uid: string]: SubnetParams } = {}
-    for (const param of params) {
-      const netuid = param.netUid.toString()
-      paramsMap[netuid] = param
-    }
-    this.params = paramsMap
-
-    this.subnets = params.map((i) => {
+    this.subnets = subnets.map((i) => {
+      const modules = this.modules[i.netuid]
+      const meta = metaSubnets.find((j) => j.netUid === i.netuid)
+      const burn = burns.find((j) => j.netUid === i.netuid)
       return {
-        id: i.netUid,
+        id: i.netuid,
         name: i.name,
-        activeKeys: 0,
-        totalKeys: 0,
-        activeValidators: 0,
-        totalValidators: 0,
-        activeMiners: 0,
-        totalMiners: 0,
-        registerCost: 0,
-        githubUrl: '',
-        registeredAt: 0,
-        registeredBy: '',
+        activeKeys: modules.filter((i) => i.active).length,
+        totalKeys: modules.length,
+        activeValidators: modules.filter((i) => i.active && i.isValidator).length,
+        totalValidators: modules.filter((i) => i.isValidator).length,
+        activeMiners: modules.filter((i) => i.active && !i.isValidator).length,
+        totalMiners: modules.filter((i) => !i.isValidator).length,
+        registerCost: burn?.burn ?? 0,
+        registeredAt: meta?.registeredAt ?? 0,
+        registeredBy: i.founder,
         emissionPercentage: 0,
+        githubUrl: '',
       }
     })
   }
