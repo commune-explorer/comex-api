@@ -3,9 +3,9 @@ export interface GraphSubnet {
   id: string
   name: string
   netUid: number
-  nodeId: number
+  nodeId: string
   registeredAt: number
-  timestamp: number
+  timestamp: string
 }
 
 export interface GraphSubnetParams {
@@ -32,19 +32,19 @@ export interface GraphSubnetParams {
 }
 
 export interface GraphSubnetBurn {
-  nodeId: number
+  nodeId: string
   netUid: number
   lastUpate: number
   id: string
-  burn: number
+  burn: string
 }
 
 export interface GraphSubnetModule {
   id: string
   uid: number
-  timestamp: number
+  timestamp: string
   registeredAt: number
-  nodeId: number
+  nodeId: string
   netUid: number
   key: string
   address: string

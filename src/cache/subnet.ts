@@ -87,7 +87,7 @@ export class SubnetCache extends Cache<SubnetInfo[]> {
         totalValidators: modules.filter((i) => i.isValidator).length,
         activeMiners: modules.filter((i) => i.active && !i.isValidator).length,
         totalMiners: modules.filter((i) => !i.isValidator).length,
-        registerCost: burn?.burn ?? 0,
+        registerCost: parseFloat((parseFloat(burn?.burn ?? '0') / 1_000_000_000).toFixed(2)),
         registeredAt: meta?.registeredAt ?? 0,
         registeredBy: i.founder,
         emissionPercentage: 0,
