@@ -6,7 +6,7 @@ export async function fetchSubnets() {
   const {
     data: { subnets },
   } = await axios.get<{ subnets: ApiSubnet[] }>(`/subnets`, {
-    baseURL: IS_PRODUCTION ? 'http://communex-api:9488/' : 'https://comex.mosaicx.org/comx-api/',
+    baseURL: IS_PRODUCTION ? 'http://communex-api:7860/' : 'https://comex.mosaicx.org/comx-api/',
     timeout: 60_000,
   })
   return subnets
