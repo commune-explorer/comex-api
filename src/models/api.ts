@@ -37,3 +37,16 @@ export interface ApiSubnetModule {
   in_immunity: boolean
   type: 'inactive' | 'miner' | 'validator'
 }
+
+export interface ApiSubnetRegistration {
+  timestamp: number
+  amount: number
+}
+
+export interface ApiSubnetMiner {
+  rank: number
+  uid: number
+  name: string
+  tokenPerDay: number
+  usdPerDay: number
+}
