@@ -50,8 +50,6 @@ services:
   comex-redis:
     container_name: comex-redis
     image: redis:latest
-    ports:
-      - "6379:6379"
     logging:
       driver: "json-file"
       options:
