@@ -23,7 +23,7 @@ export async function getSubnetLeaderboard(request: FastifyRequest<{ Params: Par
       console.log(module)
       records.push({
         uid: module.uid,
-        name: module.key,
+        name: module.name,
         rank: records.length + 1,
         tokenPerDay,
         usdPerDay: tokenPerDay * price,
