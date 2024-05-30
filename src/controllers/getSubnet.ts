@@ -16,7 +16,10 @@ export async function getSubnet(request: FastifyRequest<{ Params: ParamsType }>,
   reply.status(STANDARD.SUCCESS).send({
     data: {
       ...info,
-      params,
+      params: {
+        ...params,
+        netuid: undefined,
+      },
     },
   })
 }

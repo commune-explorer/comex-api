@@ -44,7 +44,23 @@ export class SubnetCache extends Cache<SubnetData> {
       // params
       const subnetParams = params.find((i) => i.netUid === netuid)
       if (subnetParams) {
-        paramsMap[netuid] = { ...subnetParams, netuid }
+        paramsMap[netuid] = {
+          netuid: netuid,
+          founder: subnetParams.founder,
+          tempo: subnetParams.tempo,
+          founderShare: subnetParams.founderShare,
+          immunityPeriod: subnetParams.immunityPeriod,
+          incentiveRatio: subnetParams.incentiveRatio,
+          lastUpdate: subnetParams.lastUpdate,
+          maxAllowedUids: subnetParams.maxAllowedUids,
+          maxAllowedWeights: subnetParams.maxAllowedWeights,
+          maxStake: subnetParams.maxStake,
+          maxWeightAge: subnetParams.maxWeightAge,
+          minAllowedWeights: subnetParams.minAllowedWeights,
+          minStake: subnetParams.minStake,
+          trustRatio: subnetParams.trustRatio,
+          voteMode: subnetParams.voteMode,
+        }
       }
 
       // modules
