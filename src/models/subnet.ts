@@ -17,6 +17,7 @@ export interface SubnetInfo {
 
 export interface SubnetModule {
   uid: number
+  netuid: number
   key: string
   emission: number
   incentive: number
@@ -30,6 +31,7 @@ export interface SubnetModule {
 }
 
 export interface SubnetParams {
+  netuid: number
   founder: string
   tempo: string
   founderShare: number

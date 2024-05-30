@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon -r dotenv/config src/main.ts",
+    "dev:updater": "nodemon -r dotenv/config src/updater.ts",
     "build": "rimraf ./build && tsc",
     "start": "node build/main.js"
   },
@@ -31,6 +32,7 @@
     "fastify": "^4.26.2",
     "fluent-json-schema": "^4.2.1",
     "graphql": "^16.8.1",
-    "graphql-request": "^6.1.0"
+    "graphql-request": "^6.1.0",
+    "redis": "^4.6.14"
   }
 }

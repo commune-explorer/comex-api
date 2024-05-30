@@ -5,6 +5,7 @@ services:
     container_name: comex-api
     restart: on-failure
     build:
+      dockerfile: DockerfileApi
       context: .
     volumes:
       - .:/myapp
@@ -15,6 +16,24 @@ services:
       options:
         max-size: "200k"
         max-file: "10"
+    depends_on:
+      - comex-redis
+
+  comex-updater:
+    container_name: comex-updater
+    restart: on-failure
+    build:
+      dockerfile: DockerfileUpdater
+      context: .
+    volumes:
+      - .:/myapp
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    depends_on:
+      - comex-redis
 
   communex-api:
     container_name: communex-api
@@ -22,6 +41,17 @@ services:
     image: mos4ic/communex-api:latest
     ports:
       - "9488:7860"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+  comex-redis:
+    container_name: comex-redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
     logging:
       driver: "json-file"
       options:

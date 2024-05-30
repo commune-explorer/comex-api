@@ -1,19 +1,15 @@
-import { Cache } from './base'
+import { Cache } from './basic/base'
 import axios from 'axios'
 import { CMC_KEY } from '../constants/keys'
 import { TokenData } from '../models/tokenData'
+import { RedisKey } from '../constants/common'
 
 export class TokenCache extends Cache<TokenData> {
-  private cache?: TokenData = undefined
+  public intervalSeconds = 60 * 60
+  public cacheKey: RedisKey = 'token'
 
-  public async get() {
-    if (!this.cache) {
-      await this.update()
-    }
-    return this.cache!
-  }
-
-  public async update() {
+  public async fetch() {
+    console.log('start fetch token...')
     const { data: data } = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
       params: {
         start: '1',
@@ -27,7 +23,7 @@ export class TokenCache extends Cache<TokenData> {
     })
 
     const communeData = data.data.find((item: any) => item.symbol === 'COMAI')
-    this.cache = {
+    const cache: TokenData = {
       price: communeData.quote.USD.price,
       priceChangePercentageIn24h: communeData.quote.USD.percent_change_24h,
       volumeIn24h: communeData.quote.USD.volume_24h,
@@ -35,5 +31,7 @@ export class TokenCache extends Cache<TokenData> {
       circulatingSupply: communeData.circulating_supply,
       totalSupply: communeData.total_supply,
     }
+
+    return cache
   }
 }

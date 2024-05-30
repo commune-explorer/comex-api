@@ -14,7 +14,7 @@ export async function getSubnetModules(request: FastifyRequest<{ Params: ParamsT
 
   reply.status(STANDARD.SUCCESS).send({
     data: {
-      modules: modules.sort((a, b) => a.uid - b.uid),
+      modules: modules?.sort((a, b) => a.uid - b.uid),
     },
   })
 }
