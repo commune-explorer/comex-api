@@ -91,7 +91,7 @@ export class SubnetCache extends Cache<SubnetInfo[]> {
         registeredAt: meta?.registeredAt ?? 0,
         registeredBy: i.founder,
         emissionPercentage: 0,
-        githubUrl: '',
+        githubUrl: 'https://github.com/',
       }
     })
   }
