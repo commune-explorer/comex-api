@@ -53,6 +53,7 @@ export class SubnetCache extends Cache<SubnetData> {
       modulesMap[netuid] = subnetModules.map((i) => {
         return {
           uid: i.uid,
+          name: i.name,
           netuid: netuid,
           key: i.key,
           emission: i.emission,
@@ -75,7 +76,7 @@ export class SubnetCache extends Cache<SubnetData> {
         const modules = modulesMap[i.netuid]
         const meta = metaSubnets.find((j) => j.netUid === i.netuid)
         const burn = burns.find((j) => j.netUid === i.netuid)
-        return {
+        const result: SubnetInfo = {
           id: i.netuid,
           name: i.name,
           activeKeys: modules.filter((i) => i.active).length,
@@ -90,6 +91,7 @@ export class SubnetCache extends Cache<SubnetData> {
           emissionPercentage: 0,
           githubUrl: SUBNET_REPO[i.netuid] ?? 'https://github.com/',
         }
+        return result
       }),
     }
   }

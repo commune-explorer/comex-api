@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { STANDARD } from '../constants/code'
 import { ApiSubnetMiner } from '../models/api'
 import { CACHE } from '../cache'
+import { BLOCKS_IN_DAY } from '../constants/common'
 
 interface ParamsType {
   id: string
@@ -13,16 +14,19 @@ export async function getSubnetLeaderboard(request: FastifyRequest<{ Params: Par
 
   let records: ApiSubnetMiner[] = []
 
-  const modules = await CACHE.subnet.getModules(id)
+  const price = (await CACHE.token.get()).price
+  const modules = (await CACHE.subnet.getModules(id)).sort((a, b) => b.emission - a.emission)
 
   for (let module of modules) {
     if (module.active && !module.isValidator) {
+      const tokenPerDay = module.emission * BLOCKS_IN_DAY
+      console.log(module)
       records.push({
         uid: module.uid,
         name: module.key,
-        rank: 0,
-        tokenPerDay: 0,
-        usdPerDay: 0,
+        rank: records.length + 1,
+        tokenPerDay,
+        usdPerDay: tokenPerDay * price,
       })
     }
   }

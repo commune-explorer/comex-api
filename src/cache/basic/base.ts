@@ -14,8 +14,12 @@ export abstract class Cache<T extends RedisData> {
   }
 
   public async startUpdater() {
-    const data = await this.fetch()
-    await REDIS.set(this.cacheKey, data)
+    try {
+      const data = await this.fetch()
+      await REDIS.set(this.cacheKey, data)
+    } catch (error) {
+      console.error(error)
+    }
     setTimeout(() => this.startUpdater(), this.intervalSeconds * 1000)
   }
 }

@@ -6,7 +6,7 @@ import { CACHE } from './cache'
 const start = async () => {
   const caches = Object.values(CACHE)
   for (const cache of caches) {
-    cache.startUpdater()
+    cache.startUpdater().catch(console.error)
   }
 }
 

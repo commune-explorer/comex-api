@@ -17,6 +17,7 @@ export interface SubnetInfo {
 
 export interface SubnetModule {
   uid: number
+  name: string
   netuid: number
   key: string
   emission: number

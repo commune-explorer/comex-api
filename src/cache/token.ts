@@ -5,7 +5,7 @@ import { TokenData } from '../models/tokenData'
 import { RedisKey } from '../constants/common'
 
 export class TokenCache extends Cache<TokenData> {
-  public intervalSeconds = 60 * 60
+  public intervalSeconds = 10 * 60
   public cacheKey: RedisKey = 'token'
 
   public async fetch() {
