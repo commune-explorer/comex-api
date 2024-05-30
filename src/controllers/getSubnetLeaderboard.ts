@@ -7,7 +7,7 @@ interface ParamsType {
   id: string
 }
 
-export async function getSubnetRegistration(request: FastifyRequest<{ Params: ParamsType }>, reply: FastifyReply) {
+export async function getSubnetLeaderboard(request: FastifyRequest<{ Params: ParamsType }>, reply: FastifyReply) {
   const { id: idStr } = request.params
   const id = parseInt(idStr)
 
