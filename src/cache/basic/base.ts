@@ -16,6 +16,6 @@ export abstract class Cache<T extends RedisData> {
   public async startUpdater() {
     const data = await this.fetch()
     await REDIS.set(this.cacheKey, data)
-    setTimeout(this.startUpdater, this.intervalSeconds * 1000)
+    setTimeout(() => this.startUpdater(), this.intervalSeconds * 1000)
   }
 }
