@@ -28,7 +28,7 @@ export class SubnetCache extends Cache<SubnetData> {
   }
 
   public async getParams(id: number) {
-    return (await this.get()).params.filter((i) => i.netuid === id)
+    return (await this.get()).params.find((i) => i.netuid === id)
   }
 
   public async fetch() {
