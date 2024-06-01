@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   comex-api:
     container_name: comex-api
