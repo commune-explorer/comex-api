@@ -38,4 +38,4 @@ jobs:
           port: 2222
           username: why
           key: ${{ secrets.DEPLOY_KEY }}
-          script: cd /data/comex-api && docker compose -f docker-compose.yml up -d --no-deps --build
+          script: cd /data/comex-api && docker compose pull && docker compose -f docker-compose.yml up -d --no-deps --build
