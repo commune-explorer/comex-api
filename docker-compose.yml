@@ -32,6 +32,7 @@ services:
         max-file: "10"
     depends_on:
       - comex-redis
+      - communex-api
 
   communex-api:
     container_name: communex-api
