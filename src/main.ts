@@ -1,9 +1,9 @@
 import Fastify from 'fastify'
 import jwt from '@fastify/jwt'
+import { ERROR500 } from './constants/code'
 import { home } from './routes/home'
 import { subnet } from './routes/subnet'
-
-import { ERROR500 } from './constants/code'
+import { account } from './routes/account'
 ;(BigInt.prototype as any).toJSON = function () {
   return this.toString()
 }
@@ -18,6 +18,7 @@ server.register(jwt, {
 
 server.register(home)
 server.register(subnet, { prefix: '/subnets' })
+server.register(account, { prefix: '/accounts' })
 
 server.setErrorHandler((error, request, reply) => {
   console.error(`${request.url} error:`, error)

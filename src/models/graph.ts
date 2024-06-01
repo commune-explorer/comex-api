@@ -51,3 +51,14 @@ export interface GraphSubnetModule {
   extrinsicId: number
   name: string
 }
+
+export interface GraphAccount {
+  id: string
+  address: string
+  createdAt: number
+  updatedAt: number
+  balanceFree: string
+  balanceStaked: string
+  balanceTotal: string
+  nodeId: string
+}
