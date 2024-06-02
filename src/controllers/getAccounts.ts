@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { STANDARD } from '../constants/code'
 import { fetchAccounts } from '../api/fetchAccounts'
 import { AccountOrderBy } from '../models/pagination'
+import { fetchDelegateBalances } from '../api/fetchDelegateBalances'
 
 export async function getAccounts(request: FastifyRequest, reply: FastifyReply) {
   const {
@@ -18,6 +19,7 @@ export async function getAccounts(request: FastifyRequest, reply: FastifyReply) 
   const limit = parseInt(limitStr)
 
   const { nodes, totalCount } = await fetchAccounts({ offset, limit, orderBy })
+  const delegateBalances = await fetchDelegateBalances({ accounts: nodes.map((i) => i.address) })
 
   const records = nodes.map((i, index) => {
     return {
@@ -27,6 +29,7 @@ export async function getAccounts(request: FastifyRequest, reply: FastifyReply) 
       balanceFree: i.balanceFree,
       balanceStaked: i.balanceStaked,
       balanceTotal: i.balanceTotal,
+      balanceDelegate: delegateBalances.find((delegate) => delegate.account === i.address)?.amount ?? 0,
     }
   })
 

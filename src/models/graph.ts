@@ -62,3 +62,11 @@ export interface GraphAccount {
   balanceTotal: string
   nodeId: string
 }
+
+export interface GraphDelegateBalance {
+  id: string
+  account: string
+  amount: string
+  lastUpdate: number
+  netUid: number
+}
