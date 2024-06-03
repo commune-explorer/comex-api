@@ -85,6 +85,8 @@ export class SubnetCache extends Cache<SubnetData> {
       })
     }
 
+    const totalEmission = subnets.reduce((acc, i) => acc + i.emission, 0)
+
     return {
       params: Object.values(paramsMap),
       modules: Object.values(modulesMap).flat(),
@@ -92,6 +94,7 @@ export class SubnetCache extends Cache<SubnetData> {
         const modules = modulesMap[i.netuid]
         const meta = metaSubnets.find((j) => j.netUid === i.netuid)
         const burn = burns.find((j) => j.netUid === i.netuid)
+        const emissionPercentage = (i.emission * 100) / totalEmission
         const result: SubnetInfo = {
           id: i.netuid,
           name: i.name,
@@ -104,7 +107,7 @@ export class SubnetCache extends Cache<SubnetData> {
           registerCost: parseFloat((parseFloat(burn?.burn ?? '0') / 1_000_000_000).toFixed(2)),
           registeredAt: meta?.registeredAt ?? 0,
           registeredBy: i.founder,
-          emissionPercentage: 0,
+          emissionPercentage,
           githubUrl: SUBNET_REPO[i.netuid] ?? 'https://github.com/',
         }
         return result
