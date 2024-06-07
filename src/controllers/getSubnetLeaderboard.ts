@@ -20,7 +20,6 @@ export async function getSubnetLeaderboard(request: FastifyRequest<{ Params: Par
   for (let module of modules) {
     if (module.active && !module.isValidator) {
       const tokenPerDay = module.emission * BLOCKS_IN_DAY
-      console.log(module)
       records.push({
         uid: module.uid,
         name: module.name,

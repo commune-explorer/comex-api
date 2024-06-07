@@ -23,6 +23,5 @@ export async function fetchDelegateBalances({ accounts }: { accounts: string[] }
   }
 }
   `
-  console.log(query)
   return (await request<Response>(GRAPHQL_ENDPOINT, query)).delegateBalances.nodes
 }

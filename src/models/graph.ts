@@ -70,3 +70,25 @@ export interface GraphDelegateBalance {
   lastUpdate: number
   netUid: number
 }
+
+export interface GraphDelegationEvents {
+  account: string
+  action: string
+  amount: string
+  extrinsicId: number
+  height: number
+  id: string
+  module: string
+  netUid: number
+  nodeId: string
+}
+
+export interface GraphTransfer {
+  to: string
+  nodeId: string
+  id: string
+  from: string
+  extrinsicId: number
+  blockNumber: string
+  amount: string
+}
