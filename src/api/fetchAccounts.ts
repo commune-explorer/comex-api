@@ -15,10 +15,16 @@ interface Response {
   }
 }
 
-export async function fetchAccounts({ limit, offset, orderBy }: PageParams) {
+export async function fetchAccounts({ limit, offset, orderBy, account }: PageParams & { account?: string }) {
+  const filter = account ? `filter: {address: {equalTo: "${account}"}}` : ''
   const query = `
 {
-  accounts(first: ${limit}, offset: ${offset}, orderBy: ${orderBy}) {
+  accounts(
+    ${filter}
+    first: ${limit},
+    offset: ${offset},
+    orderBy: ${orderBy}
+  ) {
     nodes {
       id
       address
