@@ -12,7 +12,7 @@ interface Response {
 }
 
 export async function fetchTransfers({ limit, offset, orderBy, account }: PageParams & { account?: string }) {
-  const filter = account ? `filter: {from: {equalTo: "${account}"}, or: {to: {equalTo: "${account}"}}}` : ''
+  const filter = account ? `filter: {from: {equalTo: "${account}"}}` : ''
   const query = `
 {
   transfers(
