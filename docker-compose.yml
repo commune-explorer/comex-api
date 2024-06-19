@@ -3,8 +3,9 @@ services:
     container_name: comex-api
     restart: on-failure
     build:
-      dockerfile: DockerfileApi
+      dockerfile: Dockerfile
       context: .
+      target: api
     volumes:
       - .:/myapp
     ports:
@@ -21,8 +22,9 @@ services:
     container_name: comex-updater
     restart: on-failure
     build:
-      dockerfile: DockerfileUpdater
+      dockerfile: Dockerfile
       context: .
+      target: updater
     volumes:
       - .:/myapp
     logging:
