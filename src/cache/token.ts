@@ -3,7 +3,7 @@ import axios from 'axios'
 import { COINGECKO_KEY } from '../constants/keys'
 import { TokenData } from '../models/tokenData'
 import { RedisKey } from '../constants/common'
-import { fetchDailyEmission } from '../api/comx'
+import { fetchDailyEmission, fetchValidatingApr } from '../api/comx'
 
 export class TokenCache extends Cache<TokenData> {
   public intervalSeconds = 60 * 60
@@ -22,6 +22,7 @@ export class TokenCache extends Cache<TokenData> {
     )
 
     const dailyEmission = await fetchDailyEmission()
+    const validatingApr = await fetchValidatingApr()
 
     const cache: TokenData = {
       price: data.market_data.current_price.usd,
@@ -31,6 +32,7 @@ export class TokenCache extends Cache<TokenData> {
       circulatingSupply: data.market_data.circulating_supply,
       totalSupply: data.market_data.total_supply,
       dailyEmission: dailyEmission,
+      validatingApr: validatingApr,
     }
 
     return cache

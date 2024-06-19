@@ -6,4 +6,5 @@ export interface TokenData {
   circulatingSupply: number
   totalSupply: number
   dailyEmission: number
+  validatingApr: number
 }

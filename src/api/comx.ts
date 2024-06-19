@@ -42,3 +42,20 @@ export async function fetchDailyEmission() {
     throw error;
   }
 }
+
+export async function fetchValidatingApr() {
+  try {
+    console.info('Fetching validating APR from:', options.baseURL);
+    const { data } = await axios.get('/apr', options);
+    console.info('fetchValidatingApr:', data);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error message:', error.message);
+      console.error('Axios error response:', error.response?.status, error.response?.data);
+    } else {
+      console.error('Unexpected error:', error);
+    }
+    throw error;
+  }
+}
