@@ -21,6 +21,7 @@ export class TokenCache extends Cache<TokenData> {
       }
     )
 
+    // Fetch from communex python api
     const dailyEmission = await fetchDailyEmission()
     const validatingApr = await fetchValidatingApr()
 
