@@ -3,7 +3,7 @@ import axios from 'axios'
 import { IS_PRODUCTION } from '../constants/common'
 
 const options = {
-  baseURL: IS_PRODUCTION ? 'http://communex-api:7860/' : 'https://comex.mosaicx.org/comx-api/',
+  baseURL: IS_PRODUCTION ? 'https://stats.communex.ai/comx-api/' : 'https://comex.mosaicx.org/comx-api/',
   timeout: 60_000,
 }
 
