@@ -5,4 +5,5 @@ export interface TokenData {
   marketCap: number
   circulatingSupply: number
   totalSupply: number
+  dailyEmission: number
 }

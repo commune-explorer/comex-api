@@ -22,3 +22,11 @@ export async function fetchSubnetModules(netuid: number) {
   console.info('fetchSubnets:', netuid, modules.length)
   return modules
 }
+
+export async function fetchDailyEmission() {
+  const {
+    data: { dailyEmission },
+  } = await axios.get<{ dailyEmission: number }>(`/daily-emission`, options)
+  console.info('fetchDailyEmission:', dailyEmission)
+  return dailyEmission
+}
