@@ -1,6 +1,6 @@
 import { Cache } from './basic/base'
 import axios from 'axios'
-import { CMC_KEY } from '../constants/keys'
+import { COINGECKO_KEY } from '../constants/keys'
 import { TokenData } from '../models/tokenData'
 import { RedisKey } from '../constants/common'
 
@@ -10,26 +10,23 @@ export class TokenCache extends Cache<TokenData> {
 
   public async fetch() {
     console.log('start fetch token...')
-    const { data: data } = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
-      params: {
-        start: '1',
-        limit: '1000',
-        convert: 'USD',
-      },
-      headers: {
-        Accepts: 'application/json',
-        'X-CMC_PRO_API_KEY': CMC_KEY,
-      },
-    })
+    const { data: data } = await axios.get(
+      'https://api.coingecko.com/api/v3/coins/commune-ai?localization=false&tickers=true&market_data=true&community_data=false&developer_data=false&sparkline=false',
+      {
+        headers: {
+          Accepts: 'application/json',
+          'x-cg-demo-api-key': COINGECKO_KEY,
+        },
+      }
+    )
 
-    const communeData = data.data.find((item: any) => item.symbol === 'COMAI')
     const cache: TokenData = {
-      price: communeData.quote.USD.price,
-      priceChangePercentageIn24h: communeData.quote.USD.percent_change_24h,
-      volumeIn24h: communeData.quote.USD.volume_24h,
-      marketCap: communeData.quote.USD.market_cap,
-      circulatingSupply: communeData.circulating_supply,
-      totalSupply: communeData.total_supply,
+      price: data.market_data.current_price.usd,
+      priceChangePercentageIn24h: data.market_data.price_change_24h,
+      volumeIn24h: data.market_data.total_volume.usd,
+      marketCap: data.market_data.market_cap.usd,
+      circulatingSupply: data.market_data.circulating_supply,
+      totalSupply: data.market_data.total_supply,
     }
 
     return cache
