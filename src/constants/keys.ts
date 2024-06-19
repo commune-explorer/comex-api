@@ -1,1 +1,1 @@
-export const CMC_KEY = '1c89ba64-14cc-441f-b490-ee6c1d7669e5'
+export const CMC_KEY = '766fe3ed-6130-48f3-82e1-0475c2bcf138'

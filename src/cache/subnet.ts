@@ -34,6 +34,8 @@ export class SubnetCache extends Cache<SubnetData> {
   public async fetch() {
     console.log('start fetch subnets...')
     const subnets = (await fetchSubnets()).filter((i) => i.emission > 0).sort((a, b) => a.netuid - b.netuid)
+    console.log(`subnets: ${JSON.stringify(subnets.map((i) => [i.netuid, i.name]))}`)
+
     const { params, subnets: metaSubnets, burns } = await fetchSubnetData()
 
     let paramsMap: { [uid: number]: SubnetParams } = {}
