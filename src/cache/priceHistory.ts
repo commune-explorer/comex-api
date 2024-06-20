@@ -21,9 +21,9 @@ export class PriceHistoryCache extends Cache<PriceRecord[]> {
       const { prices, total_volumes } = response.data;
 
       const points: PriceRecord[] = prices.map((price: [number, number], index: number) => ({
-        timestamp: price[0],
+        timestamp: Math.floor(price[0] / 1000),  // Convert milliseconds to seconds
         price: price[1],
-        volume: total_volumes[index] ? total_volumes[index][1] : 0 // Default volume to 0 if null
+        volume: total_volumes[index] ? total_volumes[index][1] : 0  // Default volume to 0 if null
       }));
 
       return points.sort((a: PriceRecord, b: PriceRecord) => a.timestamp - b.timestamp);
