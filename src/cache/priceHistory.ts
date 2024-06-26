@@ -2,6 +2,9 @@ import { Cache } from './basic/base';
 import axios, { AxiosResponse } from 'axios';
 import { PriceRecord } from '../models/priceRecord';
 import { RedisKey } from '../constants/common';
+import * as fs from 'node:fs'
+
+const comswapData = JSON.parse(fs.readFileSync('comswap.json', 'utf8')) as any[]
 
 export class PriceHistoryCache extends Cache<PriceRecord[]> {
   public intervalSeconds = 4 * 60 * 60;
@@ -26,8 +29,17 @@ export class PriceHistoryCache extends Cache<PriceRecord[]> {
         volume: total_volumes[index] ? total_volumes[index][1] : 0  // Default volume to 0 if null
       }));
 
-      return points.sort((a: PriceRecord, b: PriceRecord) => a.timestamp - b.timestamp);
+      // load comswap data at the beginning
+      const startTime = Math.min(...points.map((i: PriceRecord) => i.timestamp))
+      const oldPoints: PriceRecord[] = comswapData
+        .map((i: any) => ({
+          timestamp: Math.floor(i.date / 1000),
+          price: parseFloat(i.close),
+          volume: i.volume,
+        }))
+        .filter((i: PriceRecord) => i.timestamp < startTime)
 
+      return [...oldPoints, ...points].sort((a: PriceRecord, b: PriceRecord) => a.timestamp - b.timestamp)
     } catch (error) {
       console.error('Error fetching price history:', error);
       throw error;
