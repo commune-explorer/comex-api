@@ -4,7 +4,7 @@ import { PriceRecord } from '../models/priceRecord'
 import { RedisKey } from '../constants/common'
 import * as fs from 'node:fs'
 
-const comswapData = JSON.parse(fs.readFileSync('comswap.json', 'utf8')) as any[]
+const comswapData = JSON.parse(fs.readFileSync(__dirname + '/comswap.json', 'utf8')) as any[]
 
 export class PriceHistoryCache extends Cache<PriceRecord[]> {
   public intervalSeconds = 4 * 60 * 60
