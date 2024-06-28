@@ -1,3 +1,5 @@
+import { Tag } from './accountTag'
+
 export interface GraphSubnet {
   extrinsicId: number
   id: string
@@ -55,6 +57,7 @@ export interface GraphSubnetModule {
 export interface GraphAccount {
   id: string
   address: string
+  tag?: Tag
   createdAt: number
   updatedAt: number
   balanceFree: string
@@ -75,19 +78,23 @@ export interface GraphDelegationEvents {
   account: string
   action: string
   amount: string
+  accountTag?: Tag
   extrinsicId: number
   height: number
   id: string
   module: string
+  moduleTag?: Tag
   netUid: number
   nodeId: string
 }
 
 export interface GraphTransfer {
   to: string
+  toTag?: Tag
   nodeId: string
   id: string
   from: string
+  fromTag?: Tag
   extrinsicId: number
   blockNumber: string
   amount: string

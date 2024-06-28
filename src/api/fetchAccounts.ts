@@ -3,6 +3,7 @@ import request from 'graphql-request'
 import { GRAPHQL_ENDPOINT } from '../constants/common'
 import { GraphAccount } from '../models/graph'
 import { PageParams } from '../models/pagination'
+import { CACHE } from '../cache'
 
 interface Response {
   accounts: {
@@ -43,5 +44,14 @@ export async function fetchAccounts({ limit, offset, orderBy, account }: PagePar
   }
 }
   `
-  return (await request<Response>(GRAPHQL_ENDPOINT, query)).accounts
+  let tags = await CACHE.accountTags.get()
+  let accounts = (await request<Response>(GRAPHQL_ENDPOINT, query)).accounts
+  for (let i = 0; i < accounts.nodes.length; i++) {
+    tags.forEach((tag) => {
+      if (tag.accounts.includes(accounts.nodes[i].address)) {
+        accounts.nodes[i].tag = tag.tag
+      }
+    })
+  }
+  return accounts
 }

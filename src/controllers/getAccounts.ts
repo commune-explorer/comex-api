@@ -24,6 +24,7 @@ export async function getAccounts(request: FastifyRequest, reply: FastifyReply) 
   const records = nodes.map((i, index) => {
     return {
       rank: offset + index + 1,
+      tag: i.tag,
       address: i.address,
       updatedAt: i.updatedAt,
       balanceFree: i.balanceFree,
