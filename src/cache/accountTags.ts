@@ -76,6 +76,7 @@ export class AccountTagCache extends Cache<AccountTag[]> {
       })
     }
     const subnets = await CACHE.subnet.getSubnets()
+    const snFounders: string[] = []
     for (const subnet of subnets) {
       cache.push({
         tag: {
@@ -84,8 +85,13 @@ export class AccountTagCache extends Cache<AccountTag[]> {
         },
         accounts: [subnet.registeredBy],
       })
+      snFounders.push(subnet.registeredBy)
       const modules = await CACHE.subnet.getModules(subnet.id)
       for (const module of modules) {
+        if (snFounders.includes(module.key)) {
+          //Being founder is more important than being a module in a sn.
+          continue
+        }
         //TODO support multiple tags if active on more than one sn?
         cache.push({
           tag: {
