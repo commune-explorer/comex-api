@@ -3,6 +3,7 @@ import { getAccounts } from '../controllers/getAccounts'
 import { getDelegationEvents } from '../controllers/getDelegationEvents'
 import { getTransfers } from '../controllers/getTransfers'
 import { getAccountRank } from '../controllers/getRank'
+import { getDeposits } from '../controllers/getDeposits'
 
 export async function account(fastify: FastifyInstance) {
   fastify.route({
@@ -27,5 +28,11 @@ export async function account(fastify: FastifyInstance) {
     method: 'GET',
     url: '/transfers',
     handler: getTransfers,
+  })
+
+  fastify.route({
+    method: 'GET',
+    url: '/deposits',
+    handler: getDeposits,
   })
 }
