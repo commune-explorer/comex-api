@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { STANDARD } from '../constants/code'
-import { fetchDumps } from '../api/fetchExchangeDumps'
+import { fetchTotalDeposited } from '../api/fetchExchangeDumps'
 
 export async function getDeposits(request: FastifyRequest, reply: FastifyReply) {
   const { firstBlock, lastBlock, account } = request.query as {
@@ -9,7 +9,7 @@ export async function getDeposits(request: FastifyRequest, reply: FastifyReply) 
     lastBlock: number
   }
 
-  const deposits = await fetchDumps(account, firstBlock, lastBlock)
+  const deposits = await fetchTotalDeposited(account, firstBlock, lastBlock)
   let total_deposited = Object.fromEntries(deposits)
   reply.status(STANDARD.SUCCESS).send({
     data: { total_deposited },

@@ -11,7 +11,7 @@ interface Response {
   }
 }
 
-async function fetchDeposits(account: string, firstBlock?: number, lastBlock?: number) {
+export async function fetchTotalDeposited(account: string, firstBlock?: number, lastBlock?: number) {
   const query = gql`
     query ($filter: TransferFilter, $offset: Int) {
       transfers(filter: $filter, offset: $offset, orderBy: BLOCK_NUMBER_DESC) {
@@ -56,16 +56,16 @@ async function fetchDeposits(account: string, firstBlock?: number, lastBlock?: n
   let deposits: Map<string, number> = new Map<string, number>()
   let depositAddresses = await CACHE.exchangeAccounts.get()
   for (const transfer of transfers.entries()) {
+    if (Object.values(CACHE.exchangeAccounts.exchangeWallets).includes(transfer[0])) {
+      //exclude transfers from deposit addresses to hot wallets
+      continue
+    }
     for (const exchange of depositAddresses) {
       if (exchange.accounts.includes(transfer[0])) {
-        deposits.set(exchange.tag.text, (transfers.get(exchange.tag.text) ?? 0) + transfer[1])
+        deposits.set(exchange.tag.text, (deposits.get(exchange.tag.text) ?? 0) + transfer[1])
       }
     }
   }
 
   return deposits
-}
-
-export async function fetchDumps(account: string, firstBlock?: number, lastBlock?: number) {
-  return await fetchDeposits(account, firstBlock, lastBlock)
 }
