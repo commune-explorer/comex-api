@@ -4,6 +4,9 @@ import { ERROR500 } from './constants/code'
 import { home } from './routes/home'
 import { subnet } from './routes/subnet'
 import { account } from './routes/account'
+import { block } from './routes/block'
+import { extrinsic } from './routes/extrinsic'
+import { events } from './routes/events'
 ;(BigInt.prototype as any).toJSON = function () {
   return this.toString()
 }
@@ -19,6 +22,9 @@ server.register(jwt, {
 server.register(home)
 server.register(subnet, { prefix: '/subnets' })
 server.register(account, { prefix: '/accounts' })
+server.register(block, { prefix: '/block' })
+server.register(extrinsic, { prefix: '/extrinsic' })
+server.register(events, { prefix: '/events' })
 
 server.setErrorHandler((error, request, reply) => {
   console.error(`${request.url} error:`, error)

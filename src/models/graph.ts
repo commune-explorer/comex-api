@@ -99,3 +99,36 @@ export interface GraphTransfer {
   blockNumber: string
   amount: string
 }
+
+export interface GraphExtrinsic {
+  id: string
+  blockNumber: string
+  extrinsicId: number
+  hash: string
+  success: boolean
+  module: string
+  method: string
+  tip: string
+  args: string
+  version: number
+  signer: string
+}
+export interface GraphBlock {
+  id: string
+  height: string
+  eventCount: number
+  hash: string
+  parentHash: string
+  extrinsicCount: number
+  specVersion: number
+  timestamp: string
+}
+
+export interface GraphEvent {
+  id: number
+  blockNumber: string
+  extrinsicId: number
+  eventName: string
+  module: string
+  data: string
+}

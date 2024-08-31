@@ -12,4 +12,12 @@ export type AccountOrderBy =
 
 export type DelegateOrderBy = 'HEIGHT_ASC' | 'HEIGHT_DESC' | 'BLOCK_NUMBER_DESC' | 'BLOCK_NUMBER_ASC'
 
-export type PageParams = { offset: number; limit: number; orderBy: AccountOrderBy | DelegateOrderBy }
+export type ExtrinsicOrderBy = 'EXTRINSIC_ID_ASC' | 'EXTRINSIC_ID_DESC'
+
+export type BlockOrderBy = 'HEIGHT_DESC' | 'HEIGHT_ASC'
+
+export type PageParams = {
+  offset: number
+  limit: number
+  orderBy: AccountOrderBy | DelegateOrderBy | ExtrinsicOrderBy | BlockOrderBy
+}
