@@ -17,10 +17,13 @@ export async function fetchExtrinsics({
   orderBy,
   blockNumber,
   extrinsicId,
+  signer,
   id,
-}: PageParams & { blockNumber?: string; extrinsicId?: number; id?: string }) {
+}: PageParams & { blockNumber?: string; extrinsicId?: number; id?: string; signer?: string }) {
   const filter = id
     ? `filter: {id: {equalTo: "${id}"}}`
+    : signer
+    ? `filter: {signer: {equalTo: "${signer}"}}`
     : extrinsicId
     ? `filter: {and: {{blockNumber: {equalTo: "${blockNumber}"}}, {extrinsicId: {equalTo: ${extrinsicId} }}}`
     : `filter: {blockNumber: {equalTo: "${blockNumber}"}}`

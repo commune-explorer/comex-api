@@ -11,6 +11,7 @@ export async function getExtrinsics(request: FastifyRequest, reply: FastifyReply
     orderBy = 'EXTRINSIC_ID_ASC',
     extrinsicId,
     id,
+    signer,
   } = request.query as {
     offset: string
     limit: string
@@ -18,12 +19,13 @@ export async function getExtrinsics(request: FastifyRequest, reply: FastifyReply
     blockNumber?: string
     extrinsicId?: number
     id?: string
+    signer?: string
   }
 
   const offset = parseInt(offsetStr)
   const limit = parseInt(limitStr)
 
-  const { nodes, totalCount } = await fetchExtrinsics({ orderBy, offset, limit, blockNumber, extrinsicId, id })
+  const { nodes, totalCount } = await fetchExtrinsics({ orderBy, offset, limit, blockNumber, extrinsicId, id, signer })
 
   const records = nodes.map((i, index) => {
     return {
