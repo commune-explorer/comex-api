@@ -24,7 +24,7 @@ server.register(subnet, { prefix: '/subnets' })
 server.register(account, { prefix: '/accounts' })
 server.register(block, { prefix: '/block' })
 server.register(extrinsic, { prefix: '/extrinsic' })
-server.register(events, { prefix: '/events' })
+server.register(events, { prefix: '/evvents' })
 
 server.setErrorHandler((error, request, reply) => {
   console.error(`${request.url} error:`, error)
