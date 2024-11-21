@@ -25,6 +25,7 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
+    "@fastify/cors": "^8.5.0",
     "@fastify/jwt": "^8.0.0",
     "axios": "^1.6.8",
     "bignumber.js": "^9.1.2",
