@@ -1,5 +1,6 @@
 import Fastify from 'fastify'
 import jwt from '@fastify/jwt'
+import cors from '@fastify/cors'
 import { ERROR500 } from './constants/code'
 import { home } from './routes/home'
 import { subnet } from './routes/subnet'
@@ -17,6 +18,10 @@ const server = Fastify({
 
 server.register(jwt, {
   secret: 'k7T32aUhZbw3213QeTZsBs',
+})
+
+server.register(cors, {
+  origin: true
 })
 
 server.register(home)
