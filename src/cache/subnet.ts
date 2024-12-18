@@ -60,7 +60,6 @@ export class SubnetCache extends Cache<SubnetData> {
           maxWeightAge: subnetParams.maxWeightAge,
           minAllowedWeights: subnetParams.minAllowedWeights,
           minStake: subnetParams.minStake,
-          trustRatio: subnetParams.trustRatio,
           voteMode: subnetParams.voteMode,
         }
       }

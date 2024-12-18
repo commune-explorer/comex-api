@@ -45,6 +45,5 @@ export interface SubnetParams {
   maxWeightAge: number
   minAllowedWeights: number
   minStake: number
-  trustRatio: number
   voteMode: string
 }

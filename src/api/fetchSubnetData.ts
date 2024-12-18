@@ -43,7 +43,6 @@ export async function fetchSubnetData() {
       name
       netUid
       nodeId
-      trustRatio
       voteMode
     }
   }

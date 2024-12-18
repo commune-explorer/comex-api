@@ -29,7 +29,6 @@ export interface GraphSubnetParams {
   name: string
   netUid: number
   nodeId: number
-  trustRatio: number
   voteMode: string
 }
 
